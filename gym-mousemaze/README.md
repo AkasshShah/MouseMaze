@@ -14,7 +14,7 @@ The mouse agent is rewarded +10 for every cheese piece/pizza slice it lands on a
 
 The maze itself will be a 4x4 block-layout which will have walls between certain blocks. It's starting state might look like this:
 
-![Image of Maze](https://github.com/AkasshShah/MouseMaze/gym-mousemaze/MouseMaze.png)
+![Image of Maze](https://github.com/AkasshShah/MouseMaze/blob/master/gym-mousemaze/MouseMaze.PNG)
 
 but it will render for console output.
 
