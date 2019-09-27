@@ -18,6 +18,20 @@ The maze itself will be a 4x4 block-layout which will have walls between certain
 
 but it will render for console output.
 
+## Action Space
+
+The mouse agent can take the following actions:
+*Go North
+*Go South
+*Go West
+*Go East
+
+## Episode
+
+The episode starts when the environment is initialized or reset. The episode ends when the mouse has collected 2 cheese pieces/pizza slices.
+
+## State Space
+
 # Installation
 
 ```bash
