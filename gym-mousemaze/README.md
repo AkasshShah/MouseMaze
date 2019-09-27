@@ -4,7 +4,7 @@ The [MouseMaze environment](https://github.com/AkasshShah/MouseMaze) is a domain
 
 ## The setup
 
-The mousemaze task initializes a single mouse agent, 2 shock-wire/traps and 2 cheese pieces/pizza slices in the maze.
+The mousemaze task initializes a single mouse agent, 2 shock-wire/traps and 3 cheese pieces/pizza slices in the maze.
 
 ## Mouse
 
