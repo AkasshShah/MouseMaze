@@ -8,7 +8,7 @@ The mousemaze task initializes a single mouse agent, 2 shock-wire/traps and 3 ch
 
 ## Mouse
 
-The mouse agent is rewarded +10 for every cheese piece/pizza slice it lands on and eats. The mouse agent is rewarded -8 for every shock-wire/trap it lands on. The mouse agent is rewarded -1 for every move it takes that does not complete the episode or if the mouse does not land any anything in that step.
+The mouse agent is rewarded +25 for every cheese piece/pizza slice it lands on and eats. The mouse agent is rewarded -8 for every shock-wire/trap it lands on. The mouse agent is rewarded -1 for every move it takes that does not complete the episode or if the mouse does not land any anything in that step. The mouse agent is rewarded -7 for every time it runs into a wall or tries leaving the map.
 
 ## Maze
 
