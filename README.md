@@ -4,6 +4,6 @@ The [MouseMaze environment](https://github.com/AkasshShah/MouseMaze) is a domain
 
 ## The Setup
 
-First install the mousemaze environment as show [here](https://github.com/AkasshShah/MouseMaze/gym-mousemaze/README.md).
+First install the mousemaze environment as show [here](https://github.com/AkasshShah/MouseMaze/blob/master/gym-mousemaze/README.md).
 
 Then follow the example as shown in the .py file/files on this level.
