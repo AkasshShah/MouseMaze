@@ -21,10 +21,10 @@ but it will render for console output.
 ## Action Space
 
 The mouse agent can take the following actions:
-*Go North
-*Go South
-*Go West
-*Go East
+* Go North
+* Go South
+* Go West
+* Go East
 
 ## Episode
 
