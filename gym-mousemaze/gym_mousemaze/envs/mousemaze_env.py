@@ -17,7 +17,7 @@ m = {'name': 'mouse', 'color': 'white'}
 w = {'name': 'wall', 'color': 'blue'}
 x = {'name': 'empty', 'color': 'green'}
 v = {'name': 'void', 'color': 'clear'}
-
+'''
 MAP = [
     [x, v, p, v, x, v, x],
     [v, v, w, v, w, v, v],
@@ -26,6 +26,16 @@ MAP = [
     [x, v, x, w, x, w, t],
     [v, v, w, v, v, v, v],
     [p, w, p, v, x, v, x]
+]
+'''
+MAP = [
+    [x, v, x, v, x, v, x],
+    [v, v, w, v, w, v, v],
+    [x, w, x, v, x, w, x],
+    [v, v, v, v, v, v, v],
+    [x, v, x, w, x, w, x],
+    [v, v, w, v, v, v, v],
+    [x, w, x, v, x, v, x]
 ]
 
 
@@ -47,9 +57,13 @@ class MouseMazeEnv(gym.Env):
         # self.desc = np.asarray(MAP, dtype='c')
         self.rewardDict = self._rewardDictFunc()
         self.MAP = MAP
-        self.numberOfPizzasRemaining = 3
+        self.numberOfPizzasRemaining = 0
+        self.numberOfTrapsRemaining = 0
         self.MAPwithMouse = MAP
-        self._randomMousePos()
+        trapArray = [(6, 6), (0, 6)]
+        rewardArray = [(0, 2), (2, 2), (6, 2)]
+        self._encode((0, 0), trapArray, rewardArray)
+        # self._randomMousePos()
         self.possibleActions = ['N', 'S', 'W', 'E']
 
     def _rewardDictFunc(self):
@@ -69,6 +83,33 @@ class MouseMazeEnv(gym.Env):
                 self.MAPwithMouse[rand1][rand2] = m
                 break
 
+    def _decode(self):
+        # mousePos=self._getMousePos()
+        trapArr = []
+        rewArr = []
+        mousePos = (-1, -1)
+        for yy in range(0, 7):
+            for xx in range(0, 7):
+                if self.MAPwithMouse[yy][xx] == m:
+                    mousePos = (xx, yy)
+                elif self.MAPwithMouse[yy][xx] == t:
+                    trapArr.append((xx, yy))
+                elif self.MAPwithMouse[yy][xx] == p:
+                    rewArr.append((xx, yy))
+        return(mousePos, rewArr, trapArr)
+
+    def _encode(self, mouseTup, shockArrTup, pizzaArrTup):
+        self.MAPwithMouse = MAP
+        self.numberOfPizzasRemaining = 0
+        self.numberOfTrapsRemaining = 0
+        for i in pizzaArrTup:
+            if self._setMapBlock(i[0], i[1], p):
+                self.numberOfPizzasRemaining += 1
+        for i in shockArrTup:
+            if self._setMapBlock(i[0], i[1], t):
+                self.numberOfTrapsRemaining += 1
+        self._setMapBlock(mouseTup[0], mouseTup[1], m)
+
     def _printMAP(self):
         for i in range(7):
             for j in range(7):
@@ -86,14 +127,11 @@ class MouseMazeEnv(gym.Env):
         if(mode != 'color'):
             self._printMAP()
             return
-        # out = self.MAPwithMouse
         for i in range(7):
             for j in range(7):
-                if(self.MAP[i][j]['color'] != 'clear'):
-                    # print(utils.colorize(
-                    #     self.MAPwithMouse[i][j][name], self.MAP[i][j]['color'], highlight=True), end='\t')
+                if(self.MAPwithMouse[i][j]['color'] != 'clear'):
                     print(utils.colorize(
-                        '   ', self.MAP[i][j]['color'], highlight=True), end='')
+                        '   ', self.MAPwithMouse[i][j]['color'], highlight=True), end='')
                 else:
                     print('   ', end='')
             print('', end='\n')
@@ -183,7 +221,10 @@ class MouseMazeEnv(gym.Env):
         return(self.MAPwithMouse[ycord][xcord])
 
     def _setMapBlock(self, xcord, ycord, newVal):
-        self.MAPwithMouse[ycord][xcord] = newVal
+        if(xcord % 2 == 0 and ycord % 2 == 0):
+            self.MAPwithMouse[ycord][xcord] = newVal
+            return True
+        return False
 
     def _step(self, action):
         if action == 'N':
@@ -197,7 +238,10 @@ class MouseMazeEnv(gym.Env):
 
 
 # m1 = MouseMazeEnv()
-# m1._render()
+# m1._render(mode='color')
+
+# print(m1._decode())
+
 # stepsTaken = 0
 # done = False
 # rewards = 0
