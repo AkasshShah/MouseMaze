@@ -30,11 +30,11 @@ MAP = [
 '''
 MAP = [
     [x, v, x, v, x, v, x],
-    [v, v, w, v, w, v, v],
+    [v, w, w, v, w, w, v],
     [x, w, x, v, x, w, x],
-    [v, v, v, v, v, v, v],
+    [v, v, v, v, v, w, v],
     [x, v, x, w, x, w, x],
-    [v, v, w, v, v, v, v],
+    [v, w, w, w, v, v, v],
     [x, w, x, v, x, v, x]
 ]
 
@@ -242,18 +242,18 @@ class MouseMazeEnv(gym.Env):
             return(self._moveEastWest(1))
 
 
-# m1 = MouseMazeEnv()
-# m1._render(mode='color')
+m1 = MouseMazeEnv()
+m1._render(mode='color')
 
-# stepsTaken = 0
-# done = False
-# rewards = 0
-# frames = []
-# while(not done):
-#     decode, reward, done = m1._takeRadomAction()
-#     rewards += reward
-#     stepsTaken += 1
-#     m1._render()
-#     print('-----------------------------------------------------------')
-# print('Number of steps taken= ' + str(stepsTaken) +
-#       '\nReward Acheived=' + str(rewards))
+stepsTaken = 0
+done = False
+rewards = 0
+frames = []
+while(not done):
+    decode, reward, done = m1._takeRadomAction()
+    rewards += reward
+    stepsTaken += 1
+    m1._render()
+    print('-----------------------------------------------------------')
+print('Number of steps taken= ' + str(stepsTaken) +
+      '\nReward Acheived=' + str(rewards))
