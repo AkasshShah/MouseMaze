@@ -60,11 +60,16 @@ class MouseMazeEnv(gym.Env):
         self.numberOfPizzasRemaining = 0
         self.numberOfTrapsRemaining = 0
         self.MAPwithMouse = MAP
+        # trapArray = [(6, 6), (0, 6)]
+        # rewardArray = [(0, 2), (2, 2), (6, 2)]
+        # self._encode((0, 0), trapArray, rewardArray)
+        self._reset()
+        self.possibleActions = ['N', 'S', 'W', 'E']
+
+    def _reset(self):
         trapArray = [(6, 6), (0, 6)]
         rewardArray = [(0, 2), (2, 2), (6, 2)]
         self._encode((0, 0), trapArray, rewardArray)
-        # self._randomMousePos()
-        self.possibleActions = ['N', 'S', 'W', 'E']
 
     def _rewardDictFunc(self):
         rewardDict = {
@@ -96,7 +101,7 @@ class MouseMazeEnv(gym.Env):
                     trapArr.append((xx, yy))
                 elif self.MAPwithMouse[yy][xx] == p:
                     rewArr.append((xx, yy))
-        return(mousePos, rewArr, trapArr)
+        return((mousePos, rewArr, trapArr))
 
     def _encode(self, mouseTup, shockArrTup, pizzaArrTup):
         self.MAPwithMouse = MAP
@@ -183,7 +188,7 @@ class MouseMazeEnv(gym.Env):
         else:
             rewardUpdate += self.rewardDict['wall']
             rtnIssue = 'wall'
-        return(rewardUpdate, done)
+        return(self._decode(), rewardUpdate, done)
 
     def _moveEastWest(self, amnt):
         OrgMousePos = self._getMousePos()
@@ -215,7 +220,7 @@ class MouseMazeEnv(gym.Env):
         else:
             rewardUpdate += self.rewardDict['wall']
             rtnIssue = 'wall'
-        return(rewardUpdate, done)
+        return(self._decode(), rewardUpdate, done)
 
     def _getMapBlock(self, xcord, ycord):
         return(self.MAPwithMouse[ycord][xcord])
@@ -240,14 +245,12 @@ class MouseMazeEnv(gym.Env):
 # m1 = MouseMazeEnv()
 # m1._render(mode='color')
 
-# print(m1._decode())
-
 # stepsTaken = 0
 # done = False
 # rewards = 0
 # frames = []
 # while(not done):
-#     reward, done = m1._takeRadomAction()
+#     decode, reward, done = m1._takeRadomAction()
 #     rewards += reward
 #     stepsTaken += 1
 #     m1._render()
