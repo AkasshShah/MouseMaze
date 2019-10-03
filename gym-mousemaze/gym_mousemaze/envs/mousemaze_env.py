@@ -55,23 +55,23 @@ class MouseMazeEnv(gym.Env):
 
     def __init__(self):
         # self.desc = np.asarray(MAP, dtype='c')
-        self.rewardDict = self._rewardDictFunc()
+        self.rewardDict = self.rewardDictFunc()
         self.MAP = MAP
         self.numberOfPizzasRemaining = 0
         self.numberOfTrapsRemaining = 0
         self.MAPwithMouse = MAP
         # trapArray = [(6, 6), (0, 6)]
         # rewardArray = [(0, 2), (2, 2), (6, 2)]
-        # self._encode((0, 0), trapArray, rewardArray)
-        self._reset()
+        # self.encode((0, 0), trapArray, rewardArray)
+        self.reset()
         self.possibleActions = ['N', 'S', 'W', 'E']
 
-    def _reset(self):
+    def reset(self):
         trapArray = [(6, 6), (0, 6)]
         rewardArray = [(0, 2), (2, 2), (6, 2)]
-        self._encode((0, 0), trapArray, rewardArray)
+        self.encode((0, 0), trapArray, rewardArray)
 
-    def _rewardDictFunc(self):
+    def rewardDictFunc(self):
         rewardDict = {
             'wall': -7,
             'trap': -8,
@@ -80,7 +80,7 @@ class MouseMazeEnv(gym.Env):
         }
         return(rewardDict)
 
-    def _randomMousePos(self):
+    def randomMousePos(self):
         while(True):
             rand1 = random.randint(0, 6)
             rand2 = random.randint(0, 6)
@@ -88,8 +88,8 @@ class MouseMazeEnv(gym.Env):
                 self.MAPwithMouse[rand1][rand2] = m
                 break
 
-    def _decode(self):
-        # mousePos=self._getMousePos()
+    def decode(self):
+        # mousePos=self.getMousePos()
         trapArr = []
         rewArr = []
         mousePos = (-1, -1)
@@ -103,34 +103,34 @@ class MouseMazeEnv(gym.Env):
                     rewArr.append((xx, yy))
         return((mousePos, rewArr, trapArr))
 
-    def _encode(self, mouseTup, shockArrTup, pizzaArrTup):
+    def encode(self, mouseTup, shockArrTup, pizzaArrTup):
         self.MAPwithMouse = MAP
         self.numberOfPizzasRemaining = 0
         self.numberOfTrapsRemaining = 0
         for i in pizzaArrTup:
-            if self._setMapBlock(i[0], i[1], p):
+            if self.setMapBlock(i[0], i[1], p):
                 self.numberOfPizzasRemaining += 1
         for i in shockArrTup:
-            if self._setMapBlock(i[0], i[1], t):
+            if self.setMapBlock(i[0], i[1], t):
                 self.numberOfTrapsRemaining += 1
-        self._setMapBlock(mouseTup[0], mouseTup[1], m)
+        self.setMapBlock(mouseTup[0], mouseTup[1], m)
 
-    def _printMAP(self):
+    def printMAP(self):
         for i in range(7):
             for j in range(7):
                 print(self.MAPwithMouse[i][j]['name'], end='')
                 print('', end='\t\t')
             print('\n', end='')
 
-    def _getMousePos(self):
+    def getMousePos(self):
         for y in range(7):
             for xx in range(7):
                 if(self.MAPwithMouse[y][xx] == m):
                     return((xx, y))
 
-    def _render(self, mode='color'):
+    def render(self, mode='color'):
         if(mode != 'color'):
-            self._printMAP()
+            self.printMAP()
             return
         for i in range(7):
             for j in range(7):
@@ -141,14 +141,14 @@ class MouseMazeEnv(gym.Env):
                     print('   ', end='')
             print('', end='\n')
 
-    def _randomAction(self):
+    def randomAction(self):
         return(self.possibleActions[random.randint(0, 3)])
 
-    def _takeRadomAction(self):
-        return(self._step(self._randomAction()))
+    def takeRadomAction(self):
+        return(self.step(self.randomAction()))
 
-    def _wantsToGoOutOfBounds(self, amnt, VorH):
-        currMousePos = self._getMousePos()
+    def wantsToGoOutOfBounds(self, amnt, VorH):
+        currMousePos = self.getMousePos()
         currX = currMousePos[0]
         currY = currMousePos[1]
         if(VorH == 'V'):
@@ -157,103 +157,103 @@ class MouseMazeEnv(gym.Env):
             return(currX + amnt < 0 or currX + amnt > 6)
         return(False)
 
-    def _moveNorthSouth(self, amnt):
-        OrgMousePos = self._getMousePos()
+    def moveNorthSouth(self, amnt):
+        OrgMousePos = self.getMousePos()
         OrgMousePosX = OrgMousePos[0]
         OrgMousePosY = OrgMousePos[1]
         done = False
         rtnIssue = ''
         rewardUpdate = 0
-        if(not self._wantsToGoOutOfBounds(2*amnt, 'V')):
-            if(self._getMapBlock(OrgMousePosX, OrgMousePosY+amnt) != w):
-                # self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                if(self._getMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt)) == x):
+        if(not self.wantsToGoOutOfBounds(2*amnt, 'V')):
+            if(self.getMapBlock(OrgMousePosX, OrgMousePosY+amnt) != w):
+                # self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                if(self.getMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt)) == x):
                     rewardUpdate += self.rewardDict['normal']
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt), m)
-                elif(self._getMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt)) == t):
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt), m)
+                elif(self.getMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt)) == t):
                     rewardUpdate += self.rewardDict['trap']
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt), m)
-                elif(self._getMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt)) == p):
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt), m)
+                elif(self.getMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt)) == p):
                     rewardUpdate += self.rewardDict['pizza']
                     self.numberOfPizzasRemaining -= 1
                     if(self.numberOfPizzasRemaining == 0):
                         done = True
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt), m)
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY+(2*amnt), m)
             else:
                 rewardUpdate += self.rewardDict['wall']
                 rtnIssue = 'wall'
         else:
             rewardUpdate += self.rewardDict['wall']
             rtnIssue = 'wall'
-        return(self._decode(), rewardUpdate, done)
+        return(self.decode(), rewardUpdate, done)
 
-    def _moveEastWest(self, amnt):
-        OrgMousePos = self._getMousePos()
+    def moveEastWest(self, amnt):
+        OrgMousePos = self.getMousePos()
         OrgMousePosX = OrgMousePos[0]
         OrgMousePosY = OrgMousePos[1]
         done = False
         rtnIssue = ''
         rewardUpdate = 0
-        if(not self._wantsToGoOutOfBounds(2*amnt, 'H')):
-            if(self._getMapBlock(OrgMousePosX+amnt, OrgMousePosY) != w):
-                if(self._getMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY) == x):
+        if(not self.wantsToGoOutOfBounds(2*amnt, 'H')):
+            if(self.getMapBlock(OrgMousePosX+amnt, OrgMousePosY) != w):
+                if(self.getMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY) == x):
                     rewardUpdate += self.rewardDict['normal']
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                    self._setMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY, m)
-                elif(self._getMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY) == t):
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                    self.setMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY, m)
+                elif(self.getMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY) == t):
                     rewardUpdate += self.rewardDict['trap']
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                    self._setMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY, m)
-                elif(self._getMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY) == p):
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                    self.setMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY, m)
+                elif(self.getMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY) == p):
                     rewardUpdate += self.rewardDict['pizza']
                     self.numberOfPizzasRemaining -= 1
                     if(self.numberOfPizzasRemaining == 0):
                         done = True
-                    self._setMapBlock(OrgMousePosX, OrgMousePosY, x)
-                    self._setMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY, m)
+                    self.setMapBlock(OrgMousePosX, OrgMousePosY, x)
+                    self.setMapBlock(OrgMousePosX+(2*amnt), OrgMousePosY, m)
             else:
                 rewardUpdate += self.rewardDict['wall']
                 rtnIssue = 'wall'
         else:
             rewardUpdate += self.rewardDict['wall']
             rtnIssue = 'wall'
-        return(self._decode(), rewardUpdate, done)
+        return(self.decode(), rewardUpdate, done)
 
-    def _getMapBlock(self, xcord, ycord):
+    def getMapBlock(self, xcord, ycord):
         return(self.MAPwithMouse[ycord][xcord])
 
-    def _setMapBlock(self, xcord, ycord, newVal):
+    def setMapBlock(self, xcord, ycord, newVal):
         if(xcord % 2 == 0 and ycord % 2 == 0):
             self.MAPwithMouse[ycord][xcord] = newVal
             return True
         return False
 
-    def _step(self, action):
+    def step(self, action):
         if action == 'N':
-            return(self._moveNorthSouth(-1))
+            return(self.moveNorthSouth(-1))
         elif action == 'S':
-            return(self._moveNorthSouth(1))
+            return(self.moveNorthSouth(1))
         elif action == 'W':
-            return(self._moveEastWest(-1))
+            return(self.moveEastWest(-1))
         elif action == 'E':
-            return(self._moveEastWest(1))
+            return(self.moveEastWest(1))
 
 
-m1 = MouseMazeEnv()
-m1._render(mode='color')
+# m1 = MouseMazeEnv()
+# m1.render(mode='color')
 
-stepsTaken = 0
-done = False
-rewards = 0
-frames = []
-while(not done):
-    decode, reward, done = m1._takeRadomAction()
-    rewards += reward
-    stepsTaken += 1
-    m1._render()
-    print('-----------------------------------------------------------')
-print('Number of steps taken= ' + str(stepsTaken) +
-      '\nReward Acheived=' + str(rewards))
+# stepsTaken = 0
+# done = False
+# rewards = 0
+# frames = []
+# while(not done):
+#     decode, reward, done = m1.takeRadomAction()
+#     rewards += reward
+#     stepsTaken += 1
+#     m1.render()
+#     print('-----------------------------------------------------------')
+# print('Number of steps taken= ' + str(stepsTaken) +
+#       '\nReward Acheived=' + str(rewards))
