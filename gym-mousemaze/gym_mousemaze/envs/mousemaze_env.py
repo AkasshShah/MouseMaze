@@ -1,13 +1,13 @@
-import os
-import sys
-import time
+# import os
+# import sys
+# import time
 import gym
 import random
-from six import StringIO
-from gym import error, spaces
+# from six import StringIO
+# from gym import error, spaces
 from gym import utils
 from gym.utils import seeding
-import numpy as np
+# import numpy as np
 
 # vars initialization:
 
@@ -242,18 +242,18 @@ class MouseMazeEnv(gym.Env):
             return(self.moveEastWest(1))
 
 
-# m1 = MouseMazeEnv()
-# m1.render(mode='color')
+m1 = MouseMazeEnv()
+m1.render(mode='color')
 
-# stepsTaken = 0
-# done = False
-# rewards = 0
-# frames = []
-# while(not done):
-#     decode, reward, done = m1.takeRadomAction()
-#     rewards += reward
-#     stepsTaken += 1
-#     m1.render()
-#     print('-----------------------------------------------------------')
-# print('Number of steps taken= ' + str(stepsTaken) +
-#       '\nReward Acheived=' + str(rewards))
+stepsTaken = 0
+done = False
+rewards = 0
+frames = []
+while(not done):
+    decode, reward, done = m1.takeRadomAction()
+    rewards += reward
+    stepsTaken += 1
+    m1.render()
+    print('-----------------------------------------------------------')
+print('Number of steps taken= ' + str(stepsTaken) +
+      '\nReward Acheived=' + str(rewards))
