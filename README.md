@@ -109,4 +109,34 @@ Then follow the example as shown in the .py file/files on this level.
             env.render()
         ```
         The above code will render like so: <img src="using_gym-mousemaze/exampleRenderImages/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG" alt="Image of Encode" />\
-        The above code will also look like so in coordinate system-A: <img src="using_gym-mousemaze/exampleRenderImages/coordinateSystemA/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).png" alt="Image of Coordinate System-A" />
+        The above code will also look like so in coordinate system-A: <img src="using_gym-mousemaze/exampleRenderImages/coordinateSystemA/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).png" alt="Image of Coordinate System-A" />\
+* ```decode()```:
+    * This function has no parameters
+    * This function returns a list containing all stuff that ```encode()``` takes in as parameters
+* ```reset()```:
+    * This function takes in no parameters
+    * This function returns nothing
+    * This function **resets** the map to the original starting position
+* ```rewardDictFunc()```:
+    * This function takes in no parameters
+    * This function returns a ```dictionary```, where the keys are the type of reward, and the ```values``` are the amount assigned for that type
+    * This function returns stored values
+* ```render()```:
+    * This function takes in one parameter:
+        * ```mode = ```
+    * This function returns nothing
+    * This function ```prints``` a visual map based on the ```mode```
+        * If the parameter is set like this: ```env.render(mode = 'color')```
+            * Then the map is printed as a $$7*7$$ grid, with each block colored according to what that block is
+            * The rendering color sequence is as follows:
+                * if block is mouse: color is white
+                * if block is pizza: color is yellow
+                * if block is trap: color is red
+                * if block is wall: color is blue
+                * if block is empty: color green
+        * If the parameter is set like this: ```env.render(mode = 'text')```
+            * The function is calls ```printMAP()```
+* ```printMAP()```:
+    * This function takes in no parameters
+    * This function returns nothing
+    This function traverses the map and prints out, in text, what each block is
