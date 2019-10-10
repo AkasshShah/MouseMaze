@@ -109,5 +109,5 @@ Then follow the example as shown in the .py file/files on this level.
             env.render()
         ```
         The above code will render like so:
-        ![Image of Encode](using_gym-mousemaze/exampleRenderImages/"encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG")
+        <img src="using_gym-mousemaze/exampleRenderImages/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG" alt="Image of Encode" />
         
