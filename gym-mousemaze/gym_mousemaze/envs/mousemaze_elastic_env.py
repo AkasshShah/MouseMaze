@@ -87,9 +87,11 @@ class ElasticMouseMazeEnv(gym.Env):
         currX = currMousePos[0]
         currY = currMousePos[1]
         if(VorH == 'V'):
-            return(currY + amnt < 0 or currY + amnt > 6)
+            # return(currY + amnt < 0 or currY + amnt > 6)
+            return(currY + amnt < 0 or currY + amnt >= len(self.MAPwithMouse))
         elif(VorH == 'H'):
-            return(currX + amnt < 0 or currX + amnt > 6)
+            #     return(currX + amnt < 0 or currX + amnt > 6)
+            return(currX + amnt < 0 or currX + amnt >= len(self.MAPwithMouse))
         return(False)
 
     def getMapBlock(self, xcord, ycord):
