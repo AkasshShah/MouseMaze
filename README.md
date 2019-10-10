@@ -55,7 +55,7 @@ Then follow the example as shown in the .py file/files on this level.
     * This function returns nothing
     * This function ```prints``` a visual map based on the ```mode```
         * If the parameter is set like this: ```env.render(mode = 'color')```
-            * Then the map is printed as a $$7*7$$ grid, with each block colored according to what that block is
+            * Then the map is printed as a 7*7 grid, with each block colored according to what that block is
             * The rendering color sequence is as follows:
                 * if block is mouse: color is white
                 * if block is pizza: color is yellow
@@ -127,7 +127,7 @@ Then follow the example as shown in the .py file/files on this level.
     * This function returns nothing
     * This function ```prints``` a visual map based on the ```mode```
         * If the parameter is set like this: ```env.render(mode = 'color')```
-            * Then the map is printed as a $$7*7$$ grid, with each block colored according to what that block is
+            * Then the map is printed as a 2n-1 square grid, where n = first parameter of ```encode()```,with each block colored according to what that block is
             * The rendering color sequence is as follows:
                 * if block is mouse: color is white
                 * if block is pizza: color is yellow
