@@ -108,5 +108,5 @@ Then follow the example as shown in the .py file/files on this level.
         if(env.encode(3, (0,0), [(1,1),(2,2)], [(0,1),(1,0)], [((0,0), (0,1))])):
             env.render()
         ```
-        The above code will render like so: <img src="using_gym-mousemaze/exampleRenderImages/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG" alt="Image of Encode" />
-        The above code will also look like so in coordinate system-A: <img src="using_gym-mousemaze/exampleRenderImages/coordinateSystemA/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG" alt="Image of Encode" />
+        The above code will render like so: <img src="using_gym-mousemaze/exampleRenderImages/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG" alt="Image of Encode" />\
+        The above code will also look like so in coordinate system-A: <img src="using_gym-mousemaze/exampleRenderImages/coordinateSystemA/encode(3, (0, 0), [(1, 1), (2, 2)], [(0, 1), (1, 0)], [((0, 0), (0, 1))]).PNG" alt="Image of Coordinate System-A" />
