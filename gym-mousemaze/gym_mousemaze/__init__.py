@@ -7,3 +7,7 @@ register(
     id='mm-v1',
     entry_point='gym_mousemaze.envs:ElasticMouseMazeEnv',
 )
+register(
+    id='mm-v2',
+    entry_point='gym_mousemaze.envs:MazeMike',
+)
