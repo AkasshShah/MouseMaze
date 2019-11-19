@@ -3,12 +3,12 @@ from gym import utils
 from gym.utils import seeding
 from six import StringIO
 
-p = {'name': 'pizza', 'color': 'yellow'}
-t = {'name': 'trap', 'color': 'red'}
-m = {'name': 'mouse', 'color': 'white'}
-w = {'name': 'wall', 'color': 'blue'}
-x = {'name': 'empty', 'color': 'clear'}
-v = {'name': 'void', 'color': 'clear'}
+p = {'name': 'pizza', 'color': 'yellow', 'array': [1, 0, 0, 0, 0]}
+t = {'name': 'trap', 'color': 'red', 'array': [0, 1, 0, 0, 0]}
+m = {'name': 'mouse', 'color': 'white', 'array': [0, 0, 1, 0, 0]}
+w = {'name': 'wall', 'color': 'blue', 'array': [0, 0, 0, 1, 0]}
+x = {'name': 'empty', 'color': 'clear', 'array': [0, 0, 0, 0, 1]}
+# v = {'name': 'void', 'color': 'clear', 'array': [0,0,0,0,0]}
 
 
 class MazeMike(gym.Env):
@@ -73,7 +73,18 @@ class MazeMike(gym.Env):
     def getMapBlock(self, xx, yy):
         return(self.MAPwithMouse[yy][xx])
 
-    def decode(self):
+    def decode(self, decodeType=None):
+        if decodeType is 'decodeData':
+            return self.decodeData()
+        arr = []
+        for yy in range(len(self.MAPwithMouse)):
+            arrRow = []
+            for xx in range(len(self.MAPwithMouse[yy])):
+                arrRow.append(self.MAPwithMouse[yy][xx]['array'])
+            arr.append(arrRow)
+        return arr
+
+    def decodeData(self):
         arrTrap = []
         arrRew = []
         mousePos = (-1, -1)
@@ -212,8 +223,4 @@ class MazeMike(gym.Env):
 #     env.render(mode='color')
 #     print('-----------------------------------------------------------')
 #     dcd = env.decode()
-#     env.step('E')
-#     env.render(mode='color')
-#     print('-----------------------------------------------------------')
-#     env.encode(dcd[0], dcd[1], dcd[2], dcd[3], dcd[4])
-#     env.render()
+#     print(dcd)
